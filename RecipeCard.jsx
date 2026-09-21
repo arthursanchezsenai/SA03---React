@@ -19,11 +19,18 @@ export default function RecipeCard({
   categoria,
   tempoPreparo,
   dificuldade = "Fácil",
+  preparada = false,
+  onToggle,
+  onRemover,
 }) {
   const estilo = DIFICULDADE_ESTILO[dificuldade] ?? DIFICULDADE_ESTILO.Fácil;
 
   return (
-    <article className="flex bg-white rounded-lg overflow-hidden border border-oliva-900/10 shadow-sm">
+    <article
+      className={`flex bg-white rounded-lg overflow-hidden border border-oliva-900/10 shadow-sm transition-opacity ${
+        preparada ? "opacity-60" : ""
+      }`}
+    >
       <div className={`w-1.5 shrink-0 ${estilo.barra}`} />
       <div className="p-5 flex flex-col gap-3 flex-1">
         <div className="flex items-start justify-between gap-3">
@@ -44,6 +51,25 @@ export default function RecipeCard({
         <div className="flex items-center justify-between text-xs mt-1 pt-3 border-t border-oliva-900/10">
           <span className="font-medium text-tijolo-600">{categoria}</span>
           <span className="text-oliva-900/50">{tempoPreparo} de preparo</span>
+        </div>
+
+        <div className="flex items-center justify-between pt-1">
+          <label className="flex items-center gap-2 text-sm text-oliva-900/70 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={preparada}
+              onChange={onToggle}
+              className="w-4 h-4 accent-tijolo-600"
+            />
+            Já preparei
+          </label>
+
+          <button
+            onClick={onRemover}
+            className="text-xs text-tijolo-600/70 hover:text-tijolo-600 font-semibold"
+          >
+            Remover
+          </button>
         </div>
       </div>
     </article>
